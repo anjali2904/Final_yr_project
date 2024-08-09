@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="signstyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Modal</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,600,700">
+    
+</head>
+<body>
+    <div class="container">
+        <div class="modal" id="signUpModal">
+            <h1 class="modal-title">Create an Account</h1>
+            <p class="modal-desc">Fanny pack hexagon food truck, street art waistcoat kitsch.</p>
+            <form>
+                <div class="input-block">
+                    <label for="name" class="input-label">Name</label>
+                    <input type="text" name="name" id="name" class="input-field" placeholder="Name" required>
+                </div>
+                <div class="input-block">
+                    <label for="email" class="input-label">Email</label>
+                    <input type="email" name="email" id="email" class="input-field" placeholder="Email" required>
+                </div>
+                <div class="input-block">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" name="password" id="password" class="input-field" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+            <p class="modal-bottom">Already have an account? <a href="login.html" id="loginLink">Login now</a></p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('signUpModal');
+        
+            // Function to handle form submission
+            const handleFormSubmit = async (event) => {
+                event.preventDefault();
+        
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+        
+                const userData = {
+                    name,
+                    email,
+                    password
+                };
+        
+                try {
+                    const response = await fetch('http://localhost:3000/signup', { // Update this line
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(userData)
+                    });
+        
+                    if (response.ok) {
+                        alert('Sign up successful!');
+                        // Optionally, you can redirect the user to another page
+                    } else {
+                        alert('Sign up failed. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error signing up:', error);
+                    alert('An error occurred. Please try again later.');
+                }
+            };
+        
+            // Attach form submission handler
+            document.querySelector('.modal form').addEventListener('submit', handleFormSubmit);
+        
+            // Simulate modal opening
+            setTimeout(function () {
+                modal.classList.add('is-open');
+            }, 100);
+        });
+        </script>
+        
+  <script src="/server.js"></script>
+  
+</body>
+</html>

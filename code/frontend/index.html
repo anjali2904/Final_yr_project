@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="sliding-menu" id="slidingMenu">
+        <!-- Remove the menu items for Counselling and College Prediction -->
+        <!-- <div class="menu-item" onclick="selectCategory('Counselling')">Counselling</div>
+        <div class="menu-item" onclick="selectCategory('College Prediction')">College Prediction</div> -->
+        <!-- Add more menu items as needed -->
+    </div>
+    <div class="chat-container"></div>
+    <div class="typing-container">
+        <div class="box-container">
+            <!-- Counselling side -->
+            <div class="box" onclick="selectCategory('Counselling')">
+                <span class="category-btn">Counselling</span>
+            </div>
+            <!-- College Prediction side -->
+            <div class="box" onclick="selectCategory('College Prediction')">
+                <span class="category-btn">College Prediction</span>
+            </div>
+        </div>
+        <div class="typing-content">
+            <div class="typing-textarea">
+                <textarea id="chat-input" spellcheck="false" placeholder="Enter a prompt here" required></textarea>
+                <span id="send-btn" class="material-symbols-rounded">send</span>
+            </div>
+            <div class="typing-controls">
+                <span id="theme-btn" class="material-symbols-rounded">light_mode</span>
+                <span id="delete-btn" class="material-symbols-rounded">delete</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleMenu() {
+            var menu = document.querySelector('.hamburger-menu');
+            var slidingMenu = document.getElementById('slidingMenu');
+            menu.classList.toggle('open');
+            slidingMenu.style.left = (slidingMenu.style.left === "0px" ? "-200px" : "0px");
+            slidingMenu.style.width = (slidingMenu.style.width === "300px" ? "350px" : "300px"); // Toggle width
+        }
+        const addMenuButton = (text) => {
+    const slidingMenu = document.getElementById('slidingMenu');
+    const menuButton = document.createElement('div');
+    menuButton.classList.add('menu-item');
+    menuButton.textContent = text;
+    menuButton.addEventListener('click', () => {
+        loadAndDisplayConversation(text);
+    });
+    slidingMenu.appendChild(menuButton);
+};
+
+// After defining addMenuButton or before using it
+const loadAndDisplayConversation = (conversationKey) => {
+    const conversationData = JSON.parse(localStorage.getItem(conversationKey));
+    if (conversationData && conversationData.length > 0) {
+        chatContainer.innerHTML = '';
+        conversationData.forEach(item => {
+            const chatDiv = createChatElement(item.content, item.className);
+            chatContainer.appendChild(chatDiv);
+        });
+        chatContainer.scrollTo(0, chatContainer.scrollHeight);
+    }
+};
+
+
+    </script>
+</body>
+
+</html>
